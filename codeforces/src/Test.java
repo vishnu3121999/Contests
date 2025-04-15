@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.*;
 
 import static java.lang.Math.min;
@@ -14,24 +15,25 @@ public class Test {
 //        list.add(new TC(10,new ArrayProps(2,1,15,true)));
 //        list.add(new TC(10,new ArrayProps(6,1,10,true)));
 
-        list.add(new TC(100,new StringProps(10,true,"a-z"),new StringProps(10,true,"a-z")));
-        list.add(new TC(100,new StringProps(9,true,"01")));
+        list.add(new TC(10,new StringProps(10,true,"0123456789")));
+//        list.add(new TC(100,new StringProps(9,true,"01")));
 
         for(TC tc:list){
             int noOfTestCases = tc.noOfTestCases;
             for (int i = 0; i < noOfTestCases; i++) {
                 // get props
                 Props props1 = tc.propsList.get(0);
-                Props props2 = tc.propsList.get(1);
+//                Props props2 = tc.propsList.get(1);
 
                 // create from props
                 String u = Generators.generateString(props1);
-                String v = Generators.generateString(props2);
+//                String v = Generators.generateString(props2);
 
                 
 //
-//                String bruteForceAnswer = Main.bruteForce(u,v);
-//                String optimalAnswer = Main.optimal(u,v);
+//                BigInteger bruteForceAnswer = Main.bruteforce(u.length(),u);
+//                BigInteger optimalAnswer = Main.optimal(u.length(),u);
+
 
 //                if(bruteForceAnswer!=null && bruteForceAnswer.length()==u.length()+v.length())bruteForceAnswer=null;
 //                if(bruteForceAnswer==null || optimalAnswer==null || bruteForceAnswer.length()!=optimalAnswer.length()){

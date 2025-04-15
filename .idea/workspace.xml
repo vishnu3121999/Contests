@@ -4,7 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1159f77-6936-4882-aa48-fddeb6a03ad2" name="Changes" comment="" />
+    <list default="true" id="d1159f77-6936-4882-aa48-fddeb6a03ad2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/codeforces/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/codeforces/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codeforces/src/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/codeforces/src/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codeforces/src/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/codeforces/src/input.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codeforces/src/temp-input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/codeforces/src/temp-input.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/AU.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/AU.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/ArrayProps.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/ArrayProps.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/DSU_.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/DSU_.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/Generators.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/Generators.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/Graph_.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/Graph_.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/Main$FastReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/Main$FastReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/NT$ExtendedEuclid$Result.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/NT$ExtendedEuclid$Result.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/NT$ExtendedEuclid.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/NT$ExtendedEuclid.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/NT.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/NT.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/Pair.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/Pair.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/StringProps.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/StringProps.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/TC.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/TC.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/Test.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/input.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/codeforces/temp-input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/codeforces/temp-input.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,45 +45,48 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2l1Mb9uAVM0c1RkaMp503a1iPT0" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.A.executor": "Run",
-    "Application.B (1).executor": "Run",
-    "Application.B (2).executor": "Run",
-    "Application.B (3).executor": "Run",
-    "Application.B (4).executor": "Run",
-    "Application.B (5).executor": "Run",
-    "Application.B.executor": "Debug",
-    "Application.BigDecimal_.executor": "Run",
-    "Application.C.executor": "Run",
-    "Application.Codechef.executor": "Run",
-    "Application.D1.executor": "Run",
-    "Application.DSU_.executor": "Run",
-    "Application.Main (1).executor": "Run",
-    "Application.Main (2).executor": "Run",
-    "Application.Main (3).executor": "Run",
-    "Application.Main (4).executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.SweaterConvenience.executor": "Run",
-    "Application.Test (1).executor": "Run",
-    "Application.Test.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "extract.method.default.visibility": "private",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Contests/codeforces/src",
-    "onboarding.tips.debug.path": "C:/Contests/codeforces/src/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Application.A.executor&quot;: &quot;Run&quot;,
+    &quot;Application.B (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.B (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.B (3).executor&quot;: &quot;Run&quot;,
+    &quot;Application.B (4).executor&quot;: &quot;Run&quot;,
+    &quot;Application.B (5).executor&quot;: &quot;Run&quot;,
+    &quot;Application.B.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.BigDecimal_.executor&quot;: &quot;Run&quot;,
+    &quot;Application.C.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Codechef.executor&quot;: &quot;Run&quot;,
+    &quot;Application.D1.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DSU_.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (3).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (4).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SweaterConvenience.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Test (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Contests/codeforces/src&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Contests/codeforces/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Contests\codeforces\src" />
@@ -74,7 +98,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
-    <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Main (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="codeforces" />
       <method v="2">
@@ -114,10 +138,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Main (1)" />
-        <item itemvalue="Application.Test" />
         <item itemvalue="Application.Main (4)" />
         <item itemvalue="Application.Main (3)" />
+        <item itemvalue="Application.Test" />
+        <item itemvalue="Application.Main (2)" />
       </list>
     </recent_temporary>
   </component>
@@ -135,15 +159,7 @@
   <component name="TerminalProjectNonSharedOptionsProvider">
     <option name="startingDirectory" value="C:\Contests\codeforces\src" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/codeforces/src/Main.java</url>
-          <line>671</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

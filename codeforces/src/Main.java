@@ -18,62 +18,106 @@ public class Main implements Runnable {
 
     @Override
     public void run() {
-//        print(Generators.generateArray(new ArrayProps(5,1,10,true)));
-        print(pow(2,25));
+
+
 
 //        int T = fr.nextInt();
 //        while(T-->0) {
-//            int n = fr.nextInt();
-//            StringBuilder sb = new StringBuilder();
-//            HashMap<Integer, Integer> map = new HashMap<>();
-//            sb.append("! ");
-//            for (int i = 2; i <= n; i++) {
-//
-//                int a = 1;
-//                int b = i;
-//
-//                int x = ask(a,b);
-//                while(x!=a){
-//                    a=x;
-//                    x=ask(a,b);
-//                }
-//                if(map.containsKey(b))continue;
-//                map.put(b,x);
-//                sb.append(x).append(" ").append(b).append(" ");
-////                    print(x,b);
-//            }
-//            print(sb);
-//            System.out.flush();
+
+            int n = fr.nextInt();
+            int m = fr.nextInt();
+
+            String s = fr.next();;
+            int[][] q = read2DArr(m,2);
+
+            int[][][] pre = new int[n+1][3][3];  // n,mod3,char
+
+        pre[0]=new int[3][3];
+        for (int i = 0; i < n; i++) {
+
+//            pre[i+1]=pre[i].clone();
+            for (int j = 0; j < 3; j++) {
+                pre[i+1][j]=pre[i][j].clone();
+            }
+            pre[i+1][i%3][s.charAt(i)-'a']++;
+//            print(pre[i+1]);
+        }
+
+        for (int i = 0; i < m; i++) {
+            int l = q[i][0]-1;
+            int r =q[i][1]-1;
+
+            int[][] temp = new int[3][3];
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
+                    temp[j][k] = pre[r+1][j][k]-pre[l][j][k];
+                }
+            }
+
+            print(temp);
+            print(computee(temp));
+
+        }
+
+//        }
+    }
+
+    private int computee(int[][] temp) {
+
+        int tot=0;
+
+        int m1=-1,c1=-1;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if(temp[i][j]>max){
+                    max = temp[i][j];
+                    m1=i;c1=j;
+                }
+                tot+=temp[i][j];
+            }
+
+        }
+
+
+//        int ans =0;
+//        for (int i = 0; i < 3; i++) {
+//            if(i!=c1)ans+=temp[m1][i];
+//            if(i!=m1)ans+=temp[i][c1];
 //        }
 
-    }
 
-    private int ask(int a, int b) {
-        System.out.println("? "+a+" "+b);
-        System.out.flush();
-        return fr.nextInt();
-    }
-
-
-    public int upper(ArrayList<Integer> nums, int target) {
-        int l=0,h=nums.size();
-        while(l<h){
-            int mid = l+(h-l)/2;
-            if(nums.get(mid)>target)h=mid;
-            else l=mid+1;
+        int m2=-1,c2=-1;
+        int max2 = Integer.MIN_VALUE;
+        for (int i = 0; i < 3; i++) {
+            if(i==m1)continue;
+            for (int j = 0; j < 3; j++) {
+                if(j==c1)continue;
+                if(temp[i][j]>max2){
+                    max2 = temp[i][j];
+                    m2=i;c2=j;
+                }
+            }
         }
-        return l-1;
+
+//        for (int i = 0; i < 3; i++) {
+//            if(i!=c1 && i!=c2)ans+=temp[m2][i];
+//            if(i!=m1 && i!=m2)ans+=temp[i][c2];
+//        }
+
+        for (int i = 0; i < 3; i++) {
+            if(i==m1 || i==m2)continue;
+            for (int j = 0; j < 3; j++) {
+                if(j==c1 || j==c2)continue;
+                tot+=temp[i][j];
+            }
+        }
+
+        print(m1,c1,m2,c2);
+        return tot-max-max2;
+
     }
 
-    public int lower(ArrayList<Integer> nums, int target) {
-        int l=0,h=nums.size();
-        while(l<h){
-            int mid = l+(h-l)/2;
-            if(nums.get(mid)>=target)h=mid;
-            else l=mid+1;
-        }
-        return l;
-    }
 
     static int binarSearch(ArrayList<Integer> l,int target){
         int n = l.size();
@@ -91,10 +135,10 @@ public class Main implements Runnable {
         int l =0,h=n;
         while(l<h){
             int mid = l+(h-l)/2;
-            if(arr[mid]>=target)h=mid;
+            if(1l*arr[mid]*(arr[mid])/2>=target)h=mid;
             else l=mid+1;
         }
-        return l-1;
+        return l;
     }
 
     static int bs2(int[] arr ,long target){
@@ -108,22 +152,28 @@ public class Main implements Runnable {
         return l;
     }
 
+    public static String sortString(String input) {
+        char[] chars = input.toCharArray();
+        Arrays.sort(chars);
+        return new String(chars);
+    }
 
-    public static HashMap<Integer, Integer> sortByValue(HashMap<Integer, Integer> hm)
-    {
-        HashMap<Integer, Integer> temp
-                = hm.entrySet()
+    public LinkedHashMap<Integer, Integer> sortByValue(HashMap<Integer, Integer> hm, int comparator_0ForASC_1forDESC) {
+        Comparator<Map.Entry<Integer, Integer>> comparator =
+                comparator_0ForASC_1forDESC == 0
+                        ? Comparator.comparing((Map.Entry<Integer, Integer> e) -> e.getValue())
+                        : Comparator.comparing((Map.Entry<Integer, Integer> e) -> e.getValue()).reversed();
+
+        return hm.entrySet()
                 .stream()
-                .sorted((i1, i2)
-                        -> i1.getValue().compareTo(
-                        i2.getValue()))
+                .sorted(comparator)
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,
                         (e1, e2) -> e1,
                         LinkedHashMap::new));
-        return temp;
     }
+
     public static void push(Map<Integer, Integer> map, Integer k, Integer v)
     {
         //map[k] += v;
@@ -168,21 +218,50 @@ public class Main implements Runnable {
         else
             map.put(k, map.get(k)+v);
     }
+    public static void push(Map<Character, Integer> map, char k, int v) {
+        if (!map.containsKey(k))
+            map.put(k, v);
+        else
+            map.put(k, map.get(k) + v);
+    }
 
-    static void print(Object... args){
-        for(var o:args){
-            if(o.getClass().isArray()){
-                if (o instanceof int[])     System.out.println(Arrays.toString((int[]) o));
-                if (o instanceof long[])    System.out.println(Arrays.toString((long[]) o));
-                if (o instanceof double[])  System.out.println(Arrays.toString((double[]) o));
-                if (o instanceof float[])   System.out.println(Arrays.toString((float[]) o));
-                if (o instanceof boolean[]) System.out.println(Arrays.toString((boolean[]) o));
-                if (o instanceof char[])    System.out.println(Arrays.toString((char[]) o));
+    public static void pull(Map<Character, Integer> map, char k, int v) {
+        // Assumes map.get(k) >= v
+        int current = map.get(k);
+        if (current == v)
+            map.remove(k);
+        else
+            map.put(k, current - v);
+    }
+
+
+    static void print(Object... args) {
+        for (int i = 0; i < args.length; i++) {
+            Object o = args[i];
+            if (o.getClass().isArray()) {
+                if (o instanceof int[])
+                    System.out.println(Arrays.toString((int[]) o));
+                else if (o instanceof long[])
+                    System.out.println(Arrays.toString((long[]) o));
+                else if (o instanceof double[])
+                    System.out.println(Arrays.toString((double[]) o));
+                else if (o instanceof float[])
+                    System.out.println(Arrays.toString((float[]) o));
+                else if (o instanceof boolean[])
+                    System.out.println(Arrays.toString((boolean[]) o));
+                else if (o instanceof char[])
+                    System.out.println(Arrays.toString((char[]) o));
             }
-            else System.out.print(o+" ");
+            else {
+                System.out.print(o);
+                if (i != args.length - 1) {
+                    System.out.print(" ");
+                }
+            }
         }
         System.out.println();
     }
+
     public static void print(int[] arr) {
         StringBuilder sb = new StringBuilder();
         for (int val : arr) sb.append(val).append(" ");
@@ -203,6 +282,15 @@ public class Main implements Runnable {
         int[] arr = new int[N];
         for (int i = 0; i < N; i++)
             arr[i] = fr.nextInt();
+        return arr;
+    }
+    public int[][] read2DArr(int N,int M) {
+        int[][] arr = new int[N][M];
+        for (int i = 0; i < N; i++){
+            for (int j = 0; j < M; j++) {
+                arr[i][j]=fr.nextInt();
+            }
+        }
         return arr;
     }
     public long[] readlongArr(int N) {
@@ -381,23 +469,6 @@ class AU {
         return index;
     }
 
-    // Method to compute the sum of elements in a long array
-    public static long sum(long[] arr) {
-        long sum = 0;
-        for (long val : arr) {
-            sum += val;
-        }
-        return sum;
-    }
-
-    // Method to compute the sum of elements in an ArrayList<Long>
-    public static long sum(ArrayList<Long> list) {
-        long sum = 0;
-        for (long val : list) {
-            sum += val;
-        }
-        return sum;
-    }
 
     // Method to find the minimum value in an int array
     public static int min(int[] arr) {
@@ -447,43 +518,50 @@ class AU {
         return index;
     }
 
-    // Method to compute the sum of elements in an int array
-    public static int sum(int[] arr) {
-        int sum = 0;
+    public static long sum(long[] arr) {
+        long sum = 0;
+        for (long val : arr) {
+            sum += val;
+        }
+        return sum;
+    }
+    public static long sum(ArrayList<Long> list) {
+        long sum = 0;
+        for (long val : list) {
+            sum += val;
+        }
+        return sum;
+    }
+    public static long sum(int[] arr) {
+        long sum = 0;
         for (int val : arr) {
             sum += val;
         }
         return sum;
     }
 
-    public static long[] prefixSum(int[] ai) {
-        long sum = 0;
-        long[] ps = new long[ai.length];
-        for (int i = 0; i < ai.length; i++) {
-            sum += ai[i];
-            ps[i] = sum;
+    public static long[] prefixSum(int[] arr) {
+        int n = arr.length;
+        // Create an array with one extra element.
+        long[] ps = new long[n + 1];
+        ps[0] = 0; // This dummy element represents the sum before any elements.
+        for (int i = 0; i < n; i++) {
+            ps[i + 1] = ps[i] + arr[i];
         }
         return ps;
     }
+    public static long[] suffixSum(int[] arr) {
+        int n = arr.length;
+        // Create an array with one extra element.
+        long[] ss = new long[n + 1];
+        ss[n] = 0; // This dummy element represents the sum after all elements.
+        for (int i = n - 1; i >= 0; i--) {
+            ss[i] = ss[i + 1] + arr[i];
+        }
+        return ss;
+    }
 
-    public static long[] suffixSum(long[] ar) {
-        long sum = 0;
-        long[] ss = new long[ar.length];
-        for (int i = ar.length - 1; i >= 0; i--) {
-            sum += ar[i];
-            ss[i] = sum;
-        }
-        return ss;
-    }
-    public static long[] suffixSum(int[] ar) {
-        long sum = 0;
-        long[] ss = new long[ar.length];
-        for (int i = ar.length - 1; i >= 0; i--) {
-            sum += ar[i];
-            ss[i] = sum;
-        }
-        return ss;
-    }
+
     public static void sort(int[] arr)
     {
         //because Arrays.sort() uses quicksort which is O(n^2) worstcase
@@ -589,9 +667,9 @@ class NT {
         return (int)result;
     }
 
-    static ArrayList<Integer> getFactors(int n){
-        ArrayList<Integer> l = new ArrayList<>();
-        for (int i = 1; i*i <=n ; i++) {
+    static ArrayList<Long> getFactors(long n){
+        ArrayList<Long> l = new ArrayList<>();
+        for (long i = 1; i*i <=n ; i++) {
             if(n%i==0){
                 l.add(i);
                 if(i!=n/i){
@@ -689,12 +767,6 @@ class NT {
         }
         Collections.reverse(digits); // If you need most significant to least significant
         return digits;
-    }
-
-    public static boolean isPerfectSquare(long num) {
-        if (num < 0) return false;
-        long sqrt = (long) Math.sqrt(num);
-        return sqrt * sqrt == num;
     }
 
     public class ExtendedEuclid {
@@ -807,6 +879,63 @@ class NT {
         return "0".repeat(32-s.length())+s;
     }
 
+    public static int findMex(int[] arr) {
+        int n = arr.length;
+        boolean[] present = new boolean[n + 1];
+        for (int x : arr) {
+            if (x >= 0 && x <= n) {
+                present[x] = true;
+            }
+        }
+        for (int i = 0; i <= n; i++) {
+            if (!present[i]) {
+                return i;
+            }
+        }
+        return n + 1;
+    }
+
+    public static boolean isPerfectSquare(long num) {
+        if (num < 0) return false;
+        long sqrt = (long) Math.sqrt(num);
+        return sqrt * sqrt == num;
+    }
+
+    // Math.sqrt is O(1) but it has floating point issues for big numbers
+    // Math.sqrt(big_non-perfect_square number) maybe be rounded to long with 0 as decimal part.
+    // ex : sqrt(975461057789971042) = 987654321.0 (but its actually 987654321.00000000050625)
+    // Below method returns
+    //          -1, if integer sqrt doesnt exist
+    //          int sqrt, if it exists
+    public static long integerSqrt(long x) {
+        if (x < 0) {
+            return -1;
+        }
+        if (x < 2) {
+            return x;
+        }
+
+        long left = 1;
+        long right = x / 2 + 1; // An upper bound for sqrt(x) when x > 1
+
+        while (left < right) {
+            long mid = left + (right - left + 1) / 2;
+
+            // Instead of mid*mid which might overflow,
+            // use mid <= x / mid to compare.
+            if (mid <= x / mid) {
+                left = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
+        if (left * left == x) {
+            return left;
+        } else {
+            return -1;
+        }
+    }
+
 }
 
 // Zero-based Indexing of Vertices
@@ -839,6 +968,37 @@ class Graph_ {
             System.out.println();
         }
     }
+
+    // In some problesm edges are not always given in parent->child format, they could be child->parent also
+    // To directify the graph from root, use below, so that you dont need to include parent as
+    //  the method parameter for every methods like getSize, dp etc
+    public void convertToTree(int root) {
+        boolean[] visited = new boolean[V];
+        convertToTreeHelper(root, -1, visited);
+    }
+
+    // Helper method that performs DFS from 'node', with 'parent' being the parent vertex.
+    // It updates the adj list for each node so that it only includes children (excluding the parent).
+    private void convertToTreeHelper(int node, int parent, boolean[] visited) {
+        visited[node] = true;
+        List<int[]> children = new ArrayList<>();
+        // Iterate over the current neighbors of node.
+        for (int[] edge : adj.get(node)) {
+            int neighbor = edge[0];
+            // Skip the edge back to the parent.
+            if (neighbor == parent) {
+                continue;
+            }
+            children.add(edge);
+            if (!visited[neighbor]) {
+                convertToTreeHelper(neighbor, node, visited);
+            }
+        }
+        // Update the node's adjacency list to include only its children.
+        adj.set(node, children);
+    }
+
+
 
     // 1. Dijkstra's Algorithm
     // Time Complexity: O((V + E) log V) using a priority queue
@@ -1026,4 +1186,39 @@ class DSU_ {
         return find(x) == find(y);
     }
 
+}
+
+class Recursion {
+    private static final ThreadLocal<Integer> depth = ThreadLocal.withInitial(() -> 0);
+
+    private static void increaseDepth() {
+        depth.set(depth.get() + 1);
+    }
+
+    private static void decreaseDepth() {
+        depth.set(depth.get() - 1);
+    }
+
+    public static void logEnter(Object... args) {
+        System.out.println(indent() + "→ Entering " + formatArgs(args));
+        increaseDepth();
+    }
+
+    public static void logExit(Object... args) {
+        decreaseDepth();
+        System.out.println(indent() + "← Exiting " + formatArgs(args));
+    }
+
+    public static void logBaseCase() {
+        System.out.println(indent() + "★ Base case reached");
+    }
+
+    private static String formatArgs(Object... args) {
+        return "(" + String.join(", ", java.util.Arrays.stream(args)
+                .map(String::valueOf).toArray(String[]::new)) + ")";
+    }
+
+    private static String indent() {
+        return "│ ".repeat(depth.get());  // Adds vertical bars for better depth visualization
+    }
 }
