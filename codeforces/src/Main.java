@@ -1,9 +1,6 @@
 import java.io.*;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.math.RoundingMode;
 import java.util.*;
-import java.util.logging.LogManager;
+import java.util.function.IntBinaryOperator;
 import java.util.stream.Collectors;
 import static java.lang.Math.*;
 
@@ -20,111 +17,83 @@ public class Main implements Runnable {
     public void run() {
 
 
+//        var primes = NT.sieve(10000000);
+//        print(primes.size());
 
-//        int T = fr.nextInt();
-//        while(T-->0) {
 
-            int n = fr.nextInt();
-            int m = fr.nextInt();
+        int T = fr.nextInt();
+        while(T-->0) {
 
-            String s = fr.next();;
-            int[][] q = read2DArr(m,2);
-
-            int[][][] pre = new int[n+1][3][3];  // n,mod3,char
-
-        pre[0]=new int[3][3];
-        for (int i = 0; i < n; i++) {
-
-//            pre[i+1]=pre[i].clone();
-            for (int j = 0; j < 3; j++) {
-                pre[i+1][j]=pre[i][j].clone();
+            int n= fr.nextInt();
+            int q= fr.nextInt();
+            int[] arr = new int[n];
+            for (int i = 0; i < n; i++) {
+                arr[i] = fr.nextInt();
             }
-            pre[i+1][i%3][s.charAt(i)-'a']++;
-//            print(pre[i+1]);
-        }
+            if(n==1){
+                ArrayList<Integer> list = new ArrayList<>();
+                for (int i = 0; i < q; i++) {
+                    int l = fr.nextInt();
+                    int r = fr.nextInt();
+                    list.add(0);
+                }
+                print(list);continue;
+            }
+            int[] a = new int[n-1];
+            for (int i = 0; i < n - 1; i++) {
+                a[i] = abs(arr[i]-arr[i+1]);
+            }
 
-        for (int i = 0; i < m; i++) {
-            int l = q[i][0]-1;
-            int r =q[i][1]-1;
+            SparseTable st = new SparseTable(a,(x,y)-> toIntExact(NT.gcd(x, y)));
+            ArrayList<Integer> list = new ArrayList<>();
+            for (int i = 0; i < q; i++) {
+                int l = fr.nextInt();
+                int r = fr.nextInt();
 
-            int[][] temp = new int[3][3];
-            for (int j = 0; j < 3; j++) {
-                for (int k = 0; k < 3; k++) {
-                    temp[j][k] = pre[r+1][j][k]-pre[l][j][k];
+                if(l==r)list.add(0);
+                else{
+                    list.add(st.query(l-1,r-2));
                 }
             }
-
-            print(temp);
-            print(computee(temp));
-
-        }
-
-//        }
-    }
-
-    private int computee(int[][] temp) {
-
-        int tot=0;
-
-        int m1=-1,c1=-1;
-        int max = Integer.MIN_VALUE;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if(temp[i][j]>max){
-                    max = temp[i][j];
-                    m1=i;c1=j;
-                }
-                tot+=temp[i][j];
-            }
+            print(list);
 
         }
 
 
-//        int ans =0;
-//        for (int i = 0; i < 3; i++) {
-//            if(i!=c1)ans+=temp[m1][i];
-//            if(i!=m1)ans+=temp[i][c1];
-//        }
-
-
-        int m2=-1,c2=-1;
-        int max2 = Integer.MIN_VALUE;
-        for (int i = 0; i < 3; i++) {
-            if(i==m1)continue;
-            for (int j = 0; j < 3; j++) {
-                if(j==c1)continue;
-                if(temp[i][j]>max2){
-                    max2 = temp[i][j];
-                    m2=i;c2=j;
-                }
-            }
-        }
-
-//        for (int i = 0; i < 3; i++) {
-//            if(i!=c1 && i!=c2)ans+=temp[m2][i];
-//            if(i!=m1 && i!=m2)ans+=temp[i][c2];
-//        }
-
-        for (int i = 0; i < 3; i++) {
-            if(i==m1 || i==m2)continue;
-            for (int j = 0; j < 3; j++) {
-                if(j==c1 || j==c2)continue;
-                tot+=temp[i][j];
-            }
-        }
-
-        print(m1,c1,m2,c2);
-        return tot-max-max2;
 
     }
 
 
-    static int binarSearch(ArrayList<Integer> l,int target){
+
+    //b  --> searchInsert or Ceil
+    // if target exists return its index else return the index of element greater than target
+    public int ceil(int[] nums, int target) {
+        int l=0,h=nums.length;
+        while(l<h){
+            int mid = l+(h-l)/2;
+            if(nums[mid]>=target)h=mid;
+            else l=mid+1;
+        }
+        return l;
+    }
+    // c
+    // if target exists return its index else return the index of element smaller than target
+    public int floor(int[] nums, int target) {
+        int l=0,h=nums.length;
+        while(l<h){
+            int mid = l+(h-l)/2;
+            if(nums[mid]>target)h=mid;
+            else l=mid+1;
+        }
+        return l-1;
+    }
+
+    static int binarSearch(ArrayList<Pair<Integer, Integer>> l, int target){
         int n = l.size();
         int i=0,j=n;
         while(i<j){
             int mid = i+(j-i)/2;
-            if(l.get(mid)>target)j=mid;
+            if(l.get(mid).key>target)j=mid;
             else i=mid+1;
         }
         return i-1;
@@ -408,6 +377,10 @@ class AU {
             left++;
             right--;
         }
+    }
+
+    public static void swap(int[] a, int i, int j) {
+        int t = a[i]; a[i] = a[j]; a[j] = t;
     }
 
     // Method to find the minimum value in a long array
@@ -696,6 +669,14 @@ class NT {
         return power(a, mod - 2, mod);
     }
 
+    public static long modDiv(long a, long b, long mod) {
+        // bring a into [0,mod)
+        long am = ((a % mod) + mod) % mod;
+        // compute b^{-1} mod
+        long invB = modularInverse(b, mod);
+        return (am * invB) % mod;
+    }
+
     // nCr % mod (precomputed factorials and modular inverses required)
     public static long nCr(long n, long r, long mod) {
         if (r > n) return 0;
@@ -970,7 +951,7 @@ class Graph_ {
     }
 
     // In some problesm edges are not always given in parent->child format, they could be child->parent also
-    // To directify the graph from root, use below, so that you dont need to include parent as
+    // To directify the graph from root, use below, so that you dont need to include parent or visited arr as
     //  the method parameter for every methods like getSize, dp etc
     public void convertToTree(int root) {
         boolean[] visited = new boolean[V];
@@ -1139,6 +1120,7 @@ class Graph_ {
 //    }
 }
 
+// Zero-based indexing
 class DSU_ {
     public int[] parent;
     public int[] size;
@@ -1146,7 +1128,7 @@ class DSU_ {
     // Time Complexity: O(n)
     // Space Complexity: O(n)
     public DSU_(int n) {
-        parent = new int[n];  // Zero-based indexing
+        parent = new int[n];
         size = new int[n];
         for (int i = 0; i < n; i++) {
             parent[i] = i;
@@ -1186,6 +1168,38 @@ class DSU_ {
         return find(x) == find(y);
     }
 
+    public void printDSU() {
+        Map<Integer, List<Integer>> groups = new HashMap<>();
+        for (int i = 0; i < parent.length; i++) {
+            int root = find(i);
+            groups.computeIfAbsent(root, k -> new ArrayList<>()).add(i);
+        }
+
+        // Separate into multi-element and singletons
+        List<Map.Entry<Integer, List<Integer>>> multi = new ArrayList<>();
+        List<Integer> singletons = new ArrayList<>();
+        for (Map.Entry<Integer, List<Integer>> e : groups.entrySet()) {
+            if (e.getValue().size() > 1) {
+                multi.add(e);
+            } else {
+                singletons.add(e.getValue().get(0));
+            }
+        }
+
+        // Print multi-element sets, if any
+        if (!multi.isEmpty()) {
+            System.out.println("Multi-element sets:");
+            for (Map.Entry<Integer, List<Integer>> e : multi) {
+                System.out.println("  Root " + e.getKey() + ": " + e.getValue());
+            }
+        }
+
+        // Print single-element sets together
+        if (!singletons.isEmpty()) {
+            System.out.println("Single-element sets: " + singletons);
+        }
+    }
+
 }
 
 class Recursion {
@@ -1221,4 +1235,129 @@ class Recursion {
     private static String indent() {
         return "│ ".repeat(depth.get());  // Adds vertical bars for better depth visualization
     }
+
+    // O(2^n · n)
+    public static List<List<Integer>> powerSet(int[] a) {
+        int n = a.length;
+        List<List<Integer>> all = new ArrayList<>(1 << n);
+        for (int mask = 0; mask < (1 << n); mask++) {
+            List<Integer> subset = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                if ((mask & (1 << i)) != 0) {
+                    subset.add(a[i]);
+                }
+            }
+            all.add(subset);
+        }
+        return all;
+    }
+
+    // (in-place)
+    public static boolean nextPermutation(int[] a) {
+        int n = a.length, i = n - 2;
+        while (i >= 0 && a[i] >= a[i + 1]) i--;
+        if (i < 0) return false;
+        int j = n - 1;
+        while (a[j] <= a[i]) j--;
+        AU.swap(a, i, j);
+        // reverse suffix
+        for (int l = i + 1, r = n - 1; l < r; l++, r--) AU.swap(a, l, r);
+        return true;
+    }
+
+    // ALL PERMUTATIONS using nextPermutation, O(n! · n)
+    public static List<List<Integer>> allPermutations(int[] a) {
+        List<List<Integer>> all = new ArrayList<>();
+        Arrays.sort(a);
+        do {
+            List<Integer> p = new ArrayList<>();
+            for (int x : a) p.add(x);
+            all.add(p);
+        } while (nextPermutation(a));
+        return all;
+    }
 }
+
+// Zero-based Indexing with L,R inclusive in [L,R]
+class SparseTable {
+    private final int N;
+    private final int K;
+    private final int[][] st;       // now [N][K]
+    private final int[] log2;
+    private final IntBinaryOperator op;
+
+    /**
+     * @param arr the input array (length N)
+     * @param op  an idempotent operator, e.g. Integer::min, Integer::max, gcd, xor…
+     */
+    public SparseTable(int[] arr, IntBinaryOperator op) {
+        this.N = arr.length;
+        this.K = 32 - Integer.numberOfLeadingZeros(N);  // max levels needed
+        this.op = op;
+        this.st = new int[N][K];
+        this.log2 = new int[N + 1];
+        buildLog();
+        buildST(arr);
+    }
+
+    // Precompute floor(log2(i)) for i = 1..N
+    private void buildLog() {
+        log2[1] = 0;
+        for (int i = 2; i <= N; i++) {
+            log2[i] = log2[i / 2] + 1;
+        }
+    }
+
+    // Build in O(N log N)
+    private void buildST(int[] arr) {
+        // level k = 0: intervals of length 1
+        for (int i = 0; i < N; i++) {
+            st[i][0] = arr[i];
+        }
+
+        // levels k = 1..K-1
+        for (int k = 1; k < K; k++) {
+            int len = 1 << k;       // interval length = 2^k
+            int half = len >> 1;    // half = 2^(k-1)
+            for (int i = 0; i + len <= N; i++) {
+                // combine [i, i+2^(k-1)-1] and [i+2^(k-1), i+2^k-1]
+                st[i][k] = op.applyAsInt(st[i][k - 1], st[i + half][k - 1]);
+            }
+        }
+    }
+
+    /**
+     * O(1) query over [L..R] inclusive.
+     * @param L left index (0-based)
+     * @param R right index (0-based)
+     */
+    public int query(int L, int R) {
+        int len = R - L + 1;
+        int k = log2[len];
+        // overlap two blocks of length 2^k
+        return op.applyAsInt(
+                st[L][k],
+                st[R - (1 << k) + 1][k]
+        );
+    }
+
+//    public static void main(String[] args) {
+//        int[] a = {5, 2, 4, 7, 1, 3, 6};
+//
+//        SparseTable stMin = new SparseTable(a, Integer::min);
+//        System.out.println(stMin.query(1, 4)); // 1
+//
+//        SparseTable stMax = new SparseTable(a, Integer::max);
+//        System.out.println(stMax.query(2, 5)); // 7
+//
+//        SparseTable stGcd = new SparseTable(a, (x, y) -> gcd(x, y));
+//        System.out.println(stGcd.query(0, 3)); // 1
+//    }
+
+    private static int gcd(int x, int y) {
+        return y == 0 ? x : gcd(y, x % y);
+    }
+}
+
+
+
