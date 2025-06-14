@@ -1,13 +1,17 @@
 import java.io.*;
 import java.util.*;
-import java.util.function.IntBinaryOperator;
-import java.util.stream.Collectors;
 import static java.lang.Math.*;
+import java.util.function.*;
+import java.util.stream.Collectors;
+
 
 
 public class Main implements Runnable {
     int mod = 1000000007;
     int mod2 = 998244353;
+
+
+
     FastReader fr = new FastReader(System.in);
     public static void main(String[] args) throws FileNotFoundException {
         new Thread(null, new Main(), "Main", 1 << 28).start();
@@ -17,57 +21,75 @@ public class Main implements Runnable {
     public void run() {
 
 
-//        var primes = NT.sieve(10000000);
-//        print(primes.size());
-
-
         int T = fr.nextInt();
         while(T-->0) {
 
-            int n= fr.nextInt();
-            int q= fr.nextInt();
-            int[] arr = new int[n];
-            for (int i = 0; i < n; i++) {
-                arr[i] = fr.nextInt();
+            int n = fr.nextInt();
+            print(2*n-1);
+            for (int i = 1; i <= n-1; i++) {
+                print(i,1,i);
+                print(i,i+1,n);
             }
-            if(n==1){
-                ArrayList<Integer> list = new ArrayList<>();
-                for (int i = 0; i < q; i++) {
-                    int l = fr.nextInt();
-                    int r = fr.nextInt();
-                    list.add(0);
-                }
-                print(list);continue;
-            }
-            int[] a = new int[n-1];
-            for (int i = 0; i < n - 1; i++) {
-                a[i] = abs(arr[i]-arr[i+1]);
-            }
-
-            SparseTable st = new SparseTable(a,(x,y)-> toIntExact(NT.gcd(x, y)));
-            ArrayList<Integer> list = new ArrayList<>();
-            for (int i = 0; i < q; i++) {
-                int l = fr.nextInt();
-                int r = fr.nextInt();
-
-                if(l==r)list.add(0);
-                else{
-                    list.add(st.query(l-1,r-2));
-                }
-            }
-            print(list);
+            print(n,1,n);
 
         }
+    }
 
+    private boolean isPossibel(int[] a, int[] b, int x, int mid, int n) {
 
+        int idx = n;
+        int k = mid;
+        for (int i = n - 1; i >= 0; i--) {
+            if(k==0)break;
+            if(k>0 && x-k+1>=b[i]){
+                k--;
+            }
+            if(k==0){
+                idx=i;break;
+            }
+        }
+//        print(mid,idx);
+        for (int i = 0; i < idx; i++) {
+            if(x<a[i])return false;
+
+        }
+        for (int i = idx; i <n ; i++) {
+            if(x<a[i])return false;
+            if(x>=b[i])
+                x--;
+        }
+
+        return true;
+
+    }
+
+    private int cal(int prev, int i) {
+
+        String p = Integer.toBinaryString(prev);
+        String s = new StringBuilder(Integer.toBinaryString(i)).toString();
+        s= "0".repeat(p.length()-s.length())+s;
+//        print(prev,i,s);
+        boolean x= false;
+        for (int j = 0; j <=s.length()-1; j++) {
+            if(s.charAt(j)==p.charAt(j) && !x)continue;
+            else x=true;
+            if(s.charAt(j)=='0'){
+                int or = (1<<(s.length()-1-j))|i;
+//                print(s,j,or);
+                if(or>=prev){
+                    return or;
+                }
+                else i=or;
+            }
+        }
+        return 0;
 
     }
 
 
-
     //b  --> searchInsert or Ceil
     // if target exists return its index else return the index of element greater than target
-    public int ceil(int[] nums, int target) {
+    public int ceil(long[] nums, long target) {
         int l=0,h=nums.length;
         while(l<h){
             int mid = l+(h-l)/2;
@@ -78,7 +100,7 @@ public class Main implements Runnable {
     }
     // c
     // if target exists return its index else return the index of element smaller than target
-    public int floor(int[] nums, int target) {
+    public int floor(long[] nums, long target) {
         int l=0,h=nums.length;
         while(l<h){
             int mid = l+(h-l)/2;
@@ -86,39 +108,6 @@ public class Main implements Runnable {
             else l=mid+1;
         }
         return l-1;
-    }
-
-    static int binarSearch(ArrayList<Pair<Integer, Integer>> l, int target){
-        int n = l.size();
-        int i=0,j=n;
-        while(i<j){
-            int mid = i+(j-i)/2;
-            if(l.get(mid).key>target)j=mid;
-            else i=mid+1;
-        }
-        return i-1;
-    }
-
-    static int bs1(int[] arr ,long target){
-        int n = arr.length;
-        int l =0,h=n;
-        while(l<h){
-            int mid = l+(h-l)/2;
-            if(1l*arr[mid]*(arr[mid])/2>=target)h=mid;
-            else l=mid+1;
-        }
-        return l;
-    }
-
-    static int bs2(int[] arr ,long target){
-        int n = arr.length;
-        int l =0,h=n;
-        while(l<h){
-            int mid = l+(h-l)/2;
-            if(arr[mid]>=target)h=mid;
-            else l=mid+1;
-        }
-        return l;
     }
 
     public static String sortString(String input) {
@@ -203,6 +192,12 @@ public class Main implements Runnable {
             map.put(k, current - v);
     }
 
+    public static int ceil(int n,int m){
+        return (int) Math.ceil(n/(double)m);
+    }
+    public static long ceil(long n,long m){
+        return (long) Math.ceil(n/(double)m);
+    }
 
     static void print(Object... args) {
         for (int i = 0; i < args.length; i++) {
@@ -416,6 +411,7 @@ class AU {
         return Collections.max(list);
     }
 
+
     // Method to find the index of the minimum value in a long array
     public static int minI(long[] arr) {
         int index = 0;
@@ -547,6 +543,7 @@ class AU {
             arr[i] = ls.get(i);
     }
 
+
 }
 
 //NumberTheory
@@ -600,6 +597,7 @@ class NT {
         return result;
     }
 
+    // O(Sqrt(N)) , for arrays O(N*Sqrt(N))
     public static ArrayList<Long> getPrimeFactors(long n)
     {
         ArrayList<Long> pf = new ArrayList<>();
@@ -622,6 +620,25 @@ class NT {
         // This condition is to handle the case when n is a prime number greater than 2
         if (n > 2)
             pf.add(n);
+        return pf;
+    }
+
+    // for arrays O(N*Sqrt(N)/logN)
+    public static List<Long> getPrimeFactors(long n, List<Integer> primesUntilSqRootN) {
+        List<Long> pf = new ArrayList<>();
+        long tmp = n;
+        for (int p : primesUntilSqRootN) {
+            long pp = (long)p * p;
+            if (pp > tmp) break;
+            while (tmp % p == 0) {
+                pf.add((long)p);
+                tmp /= p;
+            }
+        }
+        if (tmp > 1) {
+            // tmp is now either 1 or a prime > sqrt(n)
+            pf.add(tmp);
+        }
         return pf;
     }
 
@@ -979,7 +996,17 @@ class Graph_ {
         adj.set(node, children);
     }
 
-
+    public Graph_ reverseGraph() {
+        Graph_ rev = new Graph_(V);
+        for (int u = 0; u < V; u++) {
+            for (int[] edge : adj.get(u)) {
+                int v = edge[0];
+                int w = edge[1];
+                rev.addEdge(v, u, w);
+            }
+        }
+        return rev;
+    }
 
     // 1. Dijkstra's Algorithm
     // Time Complexity: O((V + E) log V) using a priority queue
@@ -1122,7 +1149,7 @@ class Graph_ {
 
 // Zero-based indexing
 class DSU_ {
-    public int[] parent;
+    private int[] parent;
     public int[] size;
 
     // Time Complexity: O(n)
@@ -1223,10 +1250,9 @@ class Recursion {
         System.out.println(indent() + "← Exiting " + formatArgs(args));
     }
 
-    public static void logBaseCase() {
-        System.out.println(indent() + "★ Base case reached");
+    public static void logBaseCase(Object result) {
+        System.out.println(indent() + "★ Base case reached, returning " + result);
     }
-
     private static String formatArgs(Object... args) {
         return "(" + String.join(", ", java.util.Arrays.stream(args)
                 .map(String::valueOf).toArray(String[]::new)) + ")";
@@ -1354,10 +1380,128 @@ class SparseTable {
 //        System.out.println(stGcd.query(0, 3)); // 1
 //    }
 
-    private static int gcd(int x, int y) {
-        return y == 0 ? x : gcd(y, x % y);
-    }
 }
+
+/**
+ * Zero index based
+ * point-update and range-query
+ * Allowed associative combine function and their identities:
+ * sum - 0
+ * product - 1
+ * min - Integer.MAX_VALUE
+ * max - Integer.MIN_VALUE
+ * gcd - 0
+ * lcm - 1
+ * xor - 0
+ * & - ?
+ * | - ?
+ * Time Complexity:
+ *  - Build: O(n)
+ *  - Update: O(log n)
+ *  - Query: O(log n)
+ * Space: O(4*n)
+ */
+class SegmentTree<T> {
+    private final int n;
+    private final Object[] tree;
+    private final BinaryOperator<T> combiner;
+    private final T identity;
+
+
+    public SegmentTree(T[] arr, BinaryOperator<T> combiner, T identity) {
+        this.n = arr.length;
+        this.combiner = combiner;
+        this.identity = identity;
+        this.tree = new Object[4 * n];
+        build(1, 0, n - 1, arr);
+    }
+
+    @SuppressWarnings("unchecked")
+    public SegmentTree(int[] arr, BinaryOperator<Integer> combiner, Integer identity) {
+        this((T[]) Arrays.stream(arr).boxed().toArray(Integer[]::new), (BinaryOperator<T>) combiner, (T) identity);
+    }
+    @SuppressWarnings("unchecked")
+    public SegmentTree(long[] arr, BinaryOperator<Long> combiner, Long identity) {
+        this((T[]) Arrays.stream(arr).boxed().toArray(Long[]::new), (BinaryOperator<T>) combiner, (T) identity);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void build(int node, int start, int end, T[] arr) {
+        if (start == end) {
+            tree[node] = arr[start];
+        } else {
+            int mid = (start + end) >>> 1;
+            build(node << 1, start, mid, arr);
+            build(node << 1 | 1, mid + 1, end, arr);
+            T left = (T) tree[node << 1];
+            T right = (T) tree[node << 1 | 1];
+            tree[node] = combiner.apply(left, right);
+        }
+    }
+
+    public void update(int idx, T value) {
+        update(1, 0, n - 1, idx, value);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void update(int node, int start, int end, int idx, T value) {
+        if (start == end) {
+            tree[node] = value;
+        } else {
+            int mid = (start + end) >>> 1;
+            if (idx <= mid) {
+                update(node << 1, start, mid, idx, value);
+            } else {
+                update(node << 1 | 1, mid + 1, end, idx, value);
+            }
+            T left = (T) tree[node << 1];
+            T right = (T) tree[node << 1 | 1];
+            tree[node] = combiner.apply(left, right);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public T query(int l, int r) {
+        return query(1, 0, n - 1, l, r);
+    }
+
+    @SuppressWarnings("unchecked")
+    private T query(int node, int start, int end, int l, int r) {
+        if (r < start || end < l) {
+            return identity;
+        }
+        if (l <= start && end <= r) {
+            return (T) tree[node];
+        }
+        int mid = (start + end) >>> 1;
+        T left = query(node << 1, start, mid, l, r);
+        T right = query(node << 1 | 1, mid + 1, end, l, r);
+        return combiner.apply(left, right);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void printSegmentTree() {
+        System.out.println("Segment Tree Detailed (node [start..end] = value):");
+        printNode(1, 0, n - 1, "");
+    }
+
+    @SuppressWarnings("unchecked")
+    private void printNode(int node, int start, int end, String indent) {
+        T val = (T) tree[node];
+        System.out.printf("%s[%d..%d] = %s%n", indent, start, end, val);
+        if (start == end) return;
+        int mid = (start + end) >>> 1;
+        printNode(node << 1, start, mid, indent + "  ");
+        printNode(node << 1 | 1, mid + 1, end, indent + "  ");
+    }
+
+
+    // Example usage:
+    // Integer[] data = {2,1,5,3,4};
+    // SegmentTree<Integer> st = new SegmentTree<>(data, Integer::sum, 0);
+    // System.out.println(st.query(1,3));   // sum from index 1 to 3
+}
+
 
 
 
